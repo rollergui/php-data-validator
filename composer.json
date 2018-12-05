@@ -1,0 +1,16 @@
+{
+    "name": "rollergui/php-data-validator",
+    "description": "A simple library for validating data.",
+    "keywords": ["validation"],
+    "license": "DBAD",
+    "type": "library",
+    "require": {},
+    "require-dev": {},
+    "autoload": {
+        "files": [
+            "src/booleanValidator.php",
+            "src/numberValidator.php",
+            "src/stringValidator.php"
+        ]
+    }
+}
