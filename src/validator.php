@@ -1,4 +1,5 @@
 <?php
+require __DIR__.'/../vendor/autoload.php';
 
 const builtinValidators = [
     'boolean' => 'validateBoolean',
@@ -7,29 +8,20 @@ const builtinValidators = [
 ];
 
 function validate($rules, $data) {
-    foreach($rules as $param => $rule) {
-        print_r($param);
-        print_r($rule);
-        if (in_array($rule[0], array_keys(builtinValidators))) {
-            if (call_user_func(builtinValidators[$rule[0]], $data[$param], array_shift($rule))) {
-                echo ('Success!');
-            } else {
-                echo ('Oooops! Not valid!');
-            }
-        }
+    $validatedParams = [];
+    foreach ($rules as $param => $rulesPerParam) {
+        $validatedParams[$param] = validateParam($rulesPerParam, $data[$param]);
     }
+    var_dump($validatedParams);
 }
 
-function validateString($value, $options = []) {
-    return is_string($value);
-}
-
-function validateNumber($value, $options = []) {
-    return is_numeric($value);
-}
-
-function validateBoolean($value, $options = []) {
-    return is_bool($value);
+function validateParam($rules, $param) {
+    $validator = array_shift($rules);
+    if (in_array($validator, array_keys(builtinValidators))) {
+        return call_user_func(builtinValidators[$validator], $param, $rules);
+    } else {
+        return 'Validator unkown.';
+    }
 }
 
 ?>
