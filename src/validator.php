@@ -17,8 +17,9 @@ function validate($rules, $data) {
 
 function validateParam($rules, $param) {
     $validator = array_shift($rules);
+    $options = explode(', ', $rules[0]);
     if (in_array($validator, array_keys(builtinValidators))) {
-        return call_user_func(builtinValidators[$validator], $param, $rules);
+        return call_user_func(builtinValidators[$validator], $param, $options);
     } else {
         return 'Validator unkown.';
     }
