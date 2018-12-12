@@ -15,7 +15,7 @@ class Validator {
         foreach ($rules as $param => $rulesPerParam) {
             $validatedParams[$param] = self::validateParam($rulesPerParam, $data[$param]);
         }
-        var_dump($validatedParams);
+        return $validatedParams;
     }
 
     public static function validateParam($rules, $param) {
