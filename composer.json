@@ -7,10 +7,8 @@
     "require": {},
     "require-dev": {},
     "autoload": {
-        "files": [
-            "src/booleanValidator.php",
-            "src/numberValidator.php",
-            "src/stringValidator.php"
-        ]
+        "psr-4": {
+            "rollergui\\Validator\\": "src/"
+        }
     }
 }
