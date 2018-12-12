@@ -1,7 +1,11 @@
-<?php
+<?php namespace rollergui\Validator;
 
-function validateBoolean($value, $options = []) {
-    return is_bool($value);
+class BooleanValidator {
+
+    public static function validateBoolean($value, $options = []) {
+        return is_bool($value);
+    }
+    
 }
 
 ?>
