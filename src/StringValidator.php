@@ -7,7 +7,7 @@ class StringValidator {
     ];
 
     public static function validateString($value, $options = []) {
-        if (!options) return is_string($value);
+        if (!$options) return is_string($value);
         return (is_string($value) && self::checkStringOptions($options, $value)); 
     }
 
