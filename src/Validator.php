@@ -1,6 +1,17 @@
 <?php namespace rollergui\Validator;
 
-require(__DIR__ . '/../vendor/autoload.php');
+$composerAutoload = [
+    __DIR__ . '/../vendor/autoload.php', // for the dev repo
+    __DIR__ . '/../../autoload.php', // when installed as a composer dep
+];
+
+foreach ($composerAutoload as $autoload) {
+    if (file_exists($autoload)) {
+        require $autoload;
+        break;
+    }
+}
+
 
 class Validator {
 
