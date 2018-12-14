@@ -18,7 +18,8 @@ class Validator {
     private const BUILTIN_VALIDATORS = [
         'boolean' => 'rollergui\Validator\BooleanValidator::validateBoolean',
         'number' => 'rollergui\Validator\NumberValidator::validateNumber',
-        'string' => 'rollergui\Validator\StringValidator::validateString'
+        'string' => 'rollergui\Validator\StringValidator::validateString',
+        'array' => 'rollergui\Validator\ArrayValidator::validateArray' 
     ];
 
     public static function validate($rules, $data) {
@@ -26,12 +27,23 @@ class Validator {
         foreach ($rules as $param => $rulesPerParam) {
             $validatedParams[$param] = self::validateParam($rulesPerParam, $data[$param]);
         }
-        return $validatedParams;
+        $invalidParams = [];
+        $validParams = [];
+        foreach($validatedParams as $param => $valid) {
+            if (!$valid) array_push($invalidParams, $param);
+            else array_push($validParams, $param);
+        }
+
+        return json_encode([
+            'valid' => array_values($validParams),
+            'invalid' => array_values($invalidParams)
+        ]);
     }
+    
 
     public static function validateParam($rules, $param) {
         $validator = array_shift($rules);
-        $options = explode(', ', $rules[0]);
+        $options = is_array($rules) ? $rules : explode(', ', $rules[0]);
         if (in_array($validator, array_keys(self::BUILTIN_VALIDATORS))) {
             return call_user_func(self::BUILTIN_VALIDATORS[$validator], $param, $options);
         } else {
