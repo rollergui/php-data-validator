@@ -19,7 +19,7 @@ class Validator {
         'boolean' => 'rollergui\Validator\BooleanValidator::validateBoolean',
         'number' => 'rollergui\Validator\NumberValidator::validateNumber',
         'string' => 'rollergui\Validator\StringValidator::validateString',
-        'array' => 'rollergui\Validator\ArrayValidator::validateArray' 
+        'object' => 'rollergui\Validator\ObjectValidator::validateObject' 
     ];
 
     public static function validate($rules, $data) {

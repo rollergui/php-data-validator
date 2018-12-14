@@ -1,8 +1,8 @@
 <?php namespace rollergui\Validator;
 
-class ArrayValidator {
+class ObjectValidator {
 
-    public static function validateArray($value, $options = []) {
+    public static function validateObject($value, $options = []) {
         $validatedParams = Validator::validate($options[0], $value);
         if (!empty($validatedParams['invalid'])) {
             return false;
