@@ -1,11 +1,11 @@
 <?php namespace rollergui\Validator;
 
-class NumberValidator {
+class NumberValidator
+{
 
-    public static function validateNumber($value, $options = []) {
+    public static function validateNumber($value, $options = [])
+    {
         return is_numeric($value);
     }
-    
 }
 
-?>

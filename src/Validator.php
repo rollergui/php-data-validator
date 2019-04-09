@@ -13,23 +13,30 @@ foreach ($composerAutoload as $autoload) {
 }
 
 
-class Validator {
+class Validator
+{
 
     private const BUILTIN_VALIDATORS = [
         'boolean' => 'rollergui\Validator\BooleanValidator::validateBoolean',
         'number' => 'rollergui\Validator\NumberValidator::validateNumber',
         'string' => 'rollergui\Validator\StringValidator::validateString',
-        'object' => 'rollergui\Validator\ObjectValidator::validateObject' 
+        'object' => 'rollergui\Validator\ObjectValidator::validateObject'
     ];
 
-    public static function validate($rules, $data) {
+    public static function validate($rules, $data, $newRules)
+    {
+        print_r($rules);
+        echo("\n");
+        print_r($newRules);
+        echo("\n");
+        exit;
         $validatedParams = [];
         foreach ($rules as $param => $rulesPerParam) {
             $validatedParams[$param] = self::validateParam($rulesPerParam, $data[$param]);
         }
         $invalidParams = [];
         $validParams = [];
-        foreach($validatedParams as $param => $valid) {
+        foreach ($validatedParams as $param => $valid) {
             if (!$valid) array_push($invalidParams, $param);
             else array_push($validParams, $param);
         }
@@ -39,9 +46,9 @@ class Validator {
             'invalid' => array_values($invalidParams)
         ]);
     }
-    
 
-    public static function validateParam($rules, $param) {
+    public static function validateParam($rules, $param)
+    {
         $validator = array_shift($rules);
         $options = is_array($rules) ? $rules : explode(', ', $rules[0]);
         if (in_array($validator, array_keys(self::BUILTIN_VALIDATORS))) {
@@ -50,7 +57,5 @@ class Validator {
             throw new \Exception("Validator '$validator' is unknown.");
         }
     }
-
 }
 
-?>
