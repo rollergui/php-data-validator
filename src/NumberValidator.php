@@ -2,8 +2,7 @@
 
 class NumberValidator
 {
-
-    public static function validateNumber($value, $options = [])
+    public static function validateNumber($value)
     {
         return is_numeric($value);
     }

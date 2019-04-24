@@ -2,7 +2,7 @@
 
 class BooleanValidator
 {
-    public static function validateBoolean($value, $options = [])
+    public static function validateBoolean($value)
     {
         return is_bool($value);
     }
