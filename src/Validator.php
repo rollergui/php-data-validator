@@ -52,6 +52,17 @@ class Validator
             return call_user_func(self::BUILTIN_VALIDATORS[$validator], $param, $options);
         } else {
             throw new \Exception("Validator '$validator' is unknown.");
+    public static function formatDataAsObject($data)
+    {
+        switch (gettype($data)) {
+            case 'string':
+                return json_decode($data);
+            case 'array':
+                return json_decode(json_encode($data));
+            case 'object':
+                return $data;
+            default:
+                throw new \Exception('Rules malformed');
         }
     }
 }
