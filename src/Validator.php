@@ -12,15 +12,12 @@ foreach ($composerAutoload as $autoload) {
     }
 }
 
-
 class Validator
 {
-
     private const BUILTIN_VALIDATORS = [
         'boolean' => 'rollergui\Validator\BooleanValidator::validateBoolean',
         'number' => 'rollergui\Validator\NumberValidator::validateNumber',
-        'string' => 'rollergui\Validator\StringValidator::validateString',
-        'object' => 'rollergui\Validator\ObjectValidator::validateObject'
+        'string' => 'rollergui\Validator\StringValidator::validateString'
     ];
 
     public static function validate($rules, $data, $newRules)
