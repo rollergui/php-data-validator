@@ -20,16 +20,13 @@ class Validator
         'string' => 'rollergui\Validator\StringValidator::validateString'
     ];
 
-    public static function validate($rules, $data, $newRules)
+    public static function validate($rules, $data)
     {
-        print_r($rules);
-        echo("\n");
-        print_r($newRules);
-        echo("\n");
-        exit;
+        $formattedRules = self::formatDataAsObject($rules);
+        $formattedData = self::formatDataAsObject($data);
         $validatedParams = [];
-        foreach ($rules as $param => $rulesPerParam) {
-            $validatedParams[$param] = self::validateParam($rulesPerParam, $data[$param]);
+        foreach ($formattedRules as $param => $rulesPerParam) {
+            $validatedParams[$param] = self::validateParam($rulesPerParam, $formattedData->$param);
         }
         $invalidParams = [];
         $validParams = [];
@@ -37,7 +34,6 @@ class Validator
             if (!$valid) array_push($invalidParams, $param);
             else array_push($validParams, $param);
         }
-
         return json_encode([
             'valid' => array_values($validParams),
             'invalid' => array_values($invalidParams)
@@ -46,12 +42,13 @@ class Validator
 
     public static function validateParam($rules, $param)
     {
-        $validator = array_shift($rules);
-        $options = is_array($rules) ? $rules : explode(', ', $rules[0]);
-        if (in_array($validator, array_keys(self::BUILTIN_VALIDATORS))) {
-            return call_user_func(self::BUILTIN_VALIDATORS[$validator], $param, $options);
+        if (in_array($rules->type, array_keys(self::BUILTIN_VALIDATORS))) {
+            return call_user_func(self::BUILTIN_VALIDATORS[$rules->type], $param);
         } else {
-            throw new \Exception("Validator '$validator' is unknown.");
+            throw new \Exception("Validator '$rules->type' is unknown.");
+        }
+    }
+
     public static function formatDataAsObject($data)
     {
         switch (gettype($data)) {
