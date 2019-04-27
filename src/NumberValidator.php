@@ -6,6 +6,13 @@ class NumberValidator
 {
     public static function validateNumber($value, object $options): bool
     {
-        return is_numeric($value);
+        switch ($options->type) {
+            case 'number':
+                return is_numeric($value);
+            case 'integer':
+                return is_int($value);
+            case 'float':
+                return is_float($value);
+        }
     }
 }
