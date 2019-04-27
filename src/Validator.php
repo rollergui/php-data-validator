@@ -16,17 +16,22 @@ class Validator
 {
     private const BUILTIN_VALIDATORS = [
         'boolean' => 'rollergui\Validator\BooleanValidator::validateBoolean',
+        'float' => 'rollergui\Validator\NumberValidator::validateNumber',
+        'integer' => 'rollergui\Validator\NumberValidator::validateNumber',
         'number' => 'rollergui\Validator\NumberValidator::validateNumber',
         'string' => 'rollergui\Validator\StringValidator::validateString'
     ];
 
-    public static function validate($rules, $data)
+    public static function validate($rules, $data): string
     {
         $formattedRules = self::formatDataAsObject($rules);
         $formattedData = self::formatDataAsObject($data);
         $validatedParams = [];
         foreach ($formattedRules as $param => $rulesPerParam) {
-            $validatedParams[$param] = self::validateParam($rulesPerParam, $formattedData->$param);
+            $validatedParams[$param] = self::validateParam(
+                $rulesPerParam,
+                $formattedData->$param
+            );
         }
         $invalidParams = [];
         $validParams = [];
@@ -40,16 +45,16 @@ class Validator
         ]);
     }
 
-    public static function validateParam($rules, $param)
+    public static function validateParam(object $rules, $param)
     {
         if (in_array($rules->type, array_keys(self::BUILTIN_VALIDATORS))) {
-            return call_user_func(self::BUILTIN_VALIDATORS[$rules->type], $param);
+            return call_user_func(self::BUILTIN_VALIDATORS[$rules->type], $param, $rules);
         } else {
             throw new \Exception("Validator '$rules->type' is unknown.");
         }
     }
 
-    public static function formatDataAsObject($data)
+    public static function formatDataAsObject($data): object
     {
         switch (gettype($data)) {
             case 'string':

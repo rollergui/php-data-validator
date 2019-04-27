@@ -1,10 +1,11 @@
-<?php namespace rollergui\Validator;
+<?php declare(strict_types = 1);
+
+namespace rollergui\Validator;
 
 class BooleanValidator
 {
-    public static function validateBoolean($value)
+    public static function validateBoolean(bool $value, object $options): bool
     {
-        return is_bool($value);
+        return true;
     }
 }
-
