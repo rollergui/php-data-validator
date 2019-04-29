@@ -1,4 +1,6 @@
-<?php namespace rollergui\Validator;
+<?php declare(strict_types = 1);
+
+namespace rollergui\Validator;
 
 $composerAutoload = [
     __DIR__ . '/../vendor/autoload.php', // for the dev repo
@@ -48,7 +50,7 @@ class Validator
     public static function validateParam(object $rules, $param)
     {
         if (in_array($rules->type, array_keys(self::BUILTIN_VALIDATORS))) {
-            return call_user_func(self::BUILTIN_VALIDATORS[$rules->type], $param, $rules);
+            return self::BUILTIN_VALIDATORS[$rules->type]($param, $rules);
         } else {
             throw new \Exception("Validator '$rules->type' is unknown.");
         }
