@@ -4,7 +4,9 @@
     "keywords": ["validation"],
     "license": "DBAD",
     "type": "library",
-    "require": {},
+    "require": {
+        "php": "^7.2"
+    },
     "require-dev": {},
     "autoload": {
         "psr-4": {
